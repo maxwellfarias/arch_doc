@@ -1,29 +1,38 @@
 # Flutter Architecture Documentation
 
-A comprehensive guide to **Clean Architecture** and **Modern Flutter Architecture** patterns through three production-ready example applications, each demonstrating industry-leading best practices from well-known Flutter community experts.
-
 ## 📚 Overview
 
-This repository contains in-depth architectural documentation for three distinct Flutter applications, each showcasing professional approaches to building scalable, maintainable, and testable applications. Whether you're a beginner learning Flutter architecture or an experienced developer evaluating architectural patterns, this documentation provides valuable insights into real-world implementations.
+This repository studies **Clean Architecture** and **Modern Flutter Architecture** patterns through analysis of four real-world Flutter projects from established developers in the community. The goal is to document and understand different architectural approaches used by experienced Flutter developers.
+
+**This project is fully open for contributions.**
+
+## 🔗 Original Projects
+
+All documentation in this repository is based on the following open-source projects:
+
+- **Rivaan Ranawat** - Blog App with Clean Architecture + BLoC: [github.com/RivaanRanawat/blog-app-clean-architecture](https://github.com/RivaanRanawat/blog-app-clean-architecture)
+- **Andrea Bizzotto** - E-Commerce App with Riverpod: [github.com/bizz84/complete-flutter-course](https://github.com/bizz84/complete-flutter-course)
+- **Rodrigo Manguinho** - ForDev Survey App with TDD: [github.com/rmanguinho/clean-flutter-app](https://github.com/rmanguinho/clean-flutter-app)
+- **Flutter Team** - Compass Travel App with MVVM: [github.com/flutter/samples/tree/main/compass_app](https://github.com/flutter/samples/tree/main/compass_app)
 
 ---
 
-## 🎯 Three Expert Approaches
+## 🎯 Four Architectural Approaches
 
 ### Comparison Table
 
-| Aspect | Andrea Bizzotto | Rodrigo Manguinho | Rivaan Ranawat |
-|--------|-----------------|-------------------|----------------|
-| **Project Type** | E-Commerce App | Survey App (ForDev) | Blog App |
-| **Architecture** | Feature-First Layered | Clean Architecture + TDD | Clean Architecture + BLoC |
-| **State Management** | Riverpod 2.6 | GetX 4.3.8 | flutter_bloc 8.1.4 |
-| **Navigation** | GoRouter 15.0 | GetX Navigation | Standard Navigator |
-| **Backend** | Fake/Mock API | REST API | Supabase (BaaS) |
-| **Local Storage** | Sembast 3.8 | flutter_secure_storage + localstorage | Hive 4.0 |
-| **DI Strategy** | Code Generation | Manual Factories | get_it 7.6.7 |
-| **Error Handling** | AsyncValue | Custom Failures | fpdart Either monad |
-| **Testing** | Unit, Widget, Integration | TDD with Mocktail | Unit tests |
-| **Focus** | Modern reactive patterns | SOLID principles | Functional programming + BaaS |
+| Aspect | Andrea Bizzotto | Rodrigo Manguinho | Rivaan Ranawat | Flutter Team |
+|--------|-----------------|-------------------|----------------|--------------|
+| **Project Type** | E-Commerce App | Survey App (ForDev) | Blog App | Travel Booking App |
+| **Architecture** | Feature-First Layered | Clean Architecture + TDD | Clean Architecture + BLoC | Clean Architecture + MVVM |
+| **State Management** | Riverpod 2.6 | GetX 4.3.8 | flutter_bloc 8.1.4 | Provider + ChangeNotifier |
+| **Navigation** | GoRouter 15.0 | GetX Navigation | Standard Navigator | go_router |
+| **Backend** | Fake/Mock API | REST API | Supabase (BaaS) | Dart Shelf server (optional) |
+| **Local Storage** | Sembast 3.8 | flutter_secure_storage + localstorage | Hive 4.0 | shared_preferences |
+| **DI Strategy** | Code Generation | Manual Factories | get_it 7.6.7 | Provider DI |
+| **Error Handling** | AsyncValue | Custom Failures | fpdart Either monad | Result pattern |
+| **Testing** | Unit, Widget, Integration | TDD with Mocktail | Unit tests | Unit, Widget tests |
+| **Focus** | Modern reactive patterns | SOLID principles | Functional programming + BaaS | MVVM + educational clarity |
 
 ---
 
@@ -179,23 +188,73 @@ A full-featured blogging platform demonstrating **Clean Architecture with BLoC p
 
 ---
 
+## 📱 Project 4: Compass Travel Application (Flutter Team)
+
+**Location:** [flutter_team/](flutter_team/)
+
+### Overview
+An official Flutter sample application demonstrating **Clean Architecture with MVVM pattern** and **Provider-based state management**. This project emphasizes educational clarity and shows how the Flutter team approaches architecture in their official samples.
+
+### What Makes It Special
+- **MVVM Pattern:** Clear separation with ViewModels managing UI state
+- **Provider + ChangeNotifier:** Simpler alternative to Riverpod for state management
+- **Result Pattern:** Type-safe error handling without exceptions
+- **Official Flutter Example:** Best practices directly from the Flutter team
+- **Educational Focus:** Designed to teach architecture patterns clearly
+
+### Core Features
+- Destination browsing and search
+- Activity selection for trips
+- Complete travel itinerary booking
+- User authentication
+- Local and remote data sources with Repository pattern
+
+### Key Technologies
+- **Provider** - Simple, scalable state management
+- **go_router** - Declarative routing
+- **Freezed** - Code generation for immutable models
+- **json_serializable** - JSON serialization
+- **shared_preferences** - Simple local storage
+
+### Best For
+- Learning MVVM pattern in Flutter
+- Understanding Provider state management
+- Official Flutter team best practices
+- Educational architecture examples
+- Intermediate complexity projects
+
+### Documentation
+1. [01-architecture-overview.md](flutter_team/01-architecture-overview.md) - Architecture introduction
+2. [02-layer-breakdown.md](flutter_team/02-layer-breakdown.md) - MVVM layer explanation
+3. [03-design-patterns.md](flutter_team/03-design-patterns.md) - Design patterns catalog
+4. [04-component-deep-dive.md](flutter_team/04-component-deep-dive.md) - Component details
+5. [05-getting-started.md](flutter_team/05-getting-started.md) - Getting started guide
+6. [06-reference-guide.md](flutter_team/06-reference-guide.md) - Complete reference
+
+---
+
 ## 🎓 Learning Paths
 
 ### For Complete Beginners
 **Start Here → Gain Confidence → Build Skills**
 
 1. **Rivaan Ranawat's Blog App** (Easiest entry point)
-   - Simpler feature set (2 features vs 7+)
+   - Simpler feature set (2 features)
    - Modern BLoC pattern is beginner-friendly
    - Real backend (Supabase) teaches practical skills
    - Excellent for first Clean Architecture project
 
-2. **Andrea Bizzotto's E-Commerce App** (Modern patterns)
+2. **Flutter Team's Compass App** (Official approach)
+   - MVVM pattern with Provider
+   - Educational clarity from Flutter team
+   - Good intermediate complexity
+
+3. **Andrea Bizzotto's E-Commerce App** (Modern patterns)
    - Feature-first structure is intuitive
    - Riverpod with code generation
    - Comprehensive but well-organized
 
-3. **Rodrigo Manguinho's ForDev App** (Deep theory)
+4. **Rodrigo Manguinho's ForDev App** (Deep theory)
    - Strict Clean Architecture
    - SOLID principles mastery
    - TDD approach
@@ -204,34 +263,37 @@ A full-featured blogging platform demonstrating **Clean Architecture with BLoC p
 **Compare Approaches → Master Patterns**
 
 1. **Compare State Management**
-   - Riverpod (Andrea) vs GetX (Rodrigo) vs BLoC (Rivaan)
+   - Riverpod (Andrea) vs GetX (Rodrigo) vs BLoC (Rivaan) vs Provider (Flutter Team)
    - Code generation vs manual DI vs service locator
 
 2. **Study Architecture Variations**
    - Feature-first vs layer-first organization
-   - Error handling: AsyncValue vs custom Failures vs Either monad
+   - MVVM (Flutter Team) vs Clean Architecture variations
+   - Error handling: AsyncValue vs custom Failures vs Either monad vs Result pattern
 
 3. **Explore Backend Integration**
-   - Mock APIs (Andrea) vs REST (Rodrigo) vs BaaS (Rivaan)
+   - Mock APIs (Andrea) vs REST (Rodrigo) vs BaaS (Rivaan) vs Dart Shelf (Flutter Team)
 
 ### For Advanced Developers
 **Deep Dive → Expert Level**
 
 1. **Architecture Patterns**
-   - Repository pattern implementations across all three
+   - Repository pattern implementations across all four projects
    - Dependency inversion in practice
    - Testing strategies comparison
+   - MVVM vs Clean Architecture trade-offs
 
 2. **Choose Your Stack**
    - Evaluate based on team size and project requirements
    - Consider learning curve vs long-term maintainability
    - Pick the right state management for your use case
+   - Official Flutter team patterns vs community approaches
 
 ---
 
 ## 🔑 Key Architectural Concepts
 
-All three projects demonstrate these fundamental principles:
+All four projects demonstrate these fundamental principles:
 
 ### 1. Separation of Concerns
 - Clear layer boundaries
@@ -302,6 +364,18 @@ features/
         └── bloc/
 ```
 
+**Flutter Team (Feature-First with MVVM):**
+```
+features/
+├── authentication/
+│   ├── domain/
+│   ├── data/
+│   └── presentation/
+│       └── viewmodels/
+├── booking/
+└── activities/
+```
+
 ### State Management Philosophy
 
 **Riverpod (Andrea):** Reactive, declarative, code-generated providers
@@ -336,6 +410,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 }
 ```
 
+**Provider (Flutter Team):** Simple, observable ViewModels
+```dart
+class BookingViewModel extends ChangeNotifier {
+  Future<void> createBooking(BookingData data) async {
+    _isLoading = true;
+    notifyListeners();
+
+    final result = await repository.createBooking(data);
+    result.when(
+      success: (booking) => _booking = booking,
+      error: (error) => _error = error,
+    );
+
+    _isLoading = false;
+    notifyListeners();
+  }
+}
+```
+
 ### Error Handling Comparison
 
 **AsyncValue (Andrea):**
@@ -366,6 +459,15 @@ result.fold(
 );
 ```
 
+**Result Pattern (Flutter Team):**
+```dart
+final result = await repository.getDestination(id);
+result.when(
+  success: (destination) => _destination = destination,
+  error: (error) => _showError(error.message),
+);
+```
+
 ---
 
 ## 🚀 Quick Start Guide
@@ -381,6 +483,12 @@ result.fold(
 **For First-Time Learners:**
 ```bash
 cd rivaan_ranawat
+# Start with: 01-architecture-overview.md
+```
+
+**For Official Flutter Patterns:**
+```bash
+cd flutter_team
 # Start with: 01-architecture-overview.md
 ```
 
@@ -432,9 +540,10 @@ cd rodrigo_manguinho
 - **Riverpod 2.6** (code generation, compile-time safety)
 - **GetX 4.3.8** (reactive streams, simple DI)
 - **flutter_bloc 8.1.4** (event-driven, explicit states)
+- **Provider** (simple, observable ViewModels)
 
 ### Navigation
-- **GoRouter 15.0** (declarative, type-safe)
+- **GoRouter 15.0 / go_router** (declarative, type-safe)
 - **GetX Navigation** (imperative, simple)
 - **Standard Navigator** (traditional Flutter routing)
 
@@ -442,12 +551,14 @@ cd rodrigo_manguinho
 - **Supabase** (PostgreSQL, Auth, Storage, Real-time)
 - **REST APIs** (HTTP client integration)
 - **Mock/Fake APIs** (for prototyping)
+- **Dart Shelf** (custom server implementation)
 
 ### Local Storage
 - **Sembast 3.8** (NoSQL, cross-platform)
 - **Hive 4.0** (Fast, type-safe, NoSQL)
 - **flutter_secure_storage** (encrypted storage)
 - **localstorage** (simple key-value)
+- **shared_preferences** (simple key-value persistence)
 
 ### Functional Programming
 - **fpdart 1.1.0** (Either monad, functional utilities)
@@ -457,6 +568,7 @@ cd rodrigo_manguinho
 - **Code Generation** (riverpod_generator)
 - **Manual Factories** (composition root)
 - **Service Locator** (get_it)
+- **Provider DI** (built-in dependency injection)
 
 ### Testing
 - **Mocktail** (modern mocking)
@@ -491,20 +603,28 @@ cd rodrigo_manguinho
 - ✅ Building content platforms (blogs, news, social media)
 - ✅ Want service locator pattern (get_it)
 
+### Choose Flutter Team's Approach If You:
+- ✅ Want official Flutter best practices
+- ✅ Prefer MVVM pattern over Clean Architecture
+- ✅ Need simpler state management (Provider vs Riverpod)
+- ✅ Value educational clarity and well-documented examples
+- ✅ Building apps with moderate complexity
+- ✅ Want to learn patterns endorsed by the Flutter team
+
 ---
 
 ## 📈 Project Comparison
 
-| Metric | Andrea Bizzotto | Rodrigo Manguinho | Rivaan Ranawat |
-|--------|-----------------|-------------------|----------------|
-| **Complexity** | High | High | Medium |
-| **Learning Curve** | Medium | Steep | Gentle |
-| **Features** | 7+ features | 3 features | 2 features |
-| **Files** | 100+ | 178 | 48 |
-| **Backend** | Mock/Fake | REST API | Supabase BaaS |
-| **Best For** | Production apps | Enterprise teams | Learning |
-| **Code Generation** | Yes (Riverpod) | No | No |
-| **Null Safety** | Yes | Yes | Yes |
+| Metric | Andrea Bizzotto | Rodrigo Manguinho | Rivaan Ranawat | Flutter Team |
+|--------|-----------------|-------------------|----------------|--------------|
+| **Complexity** | High | High | Medium | Medium |
+| **Learning Curve** | Medium | Steep | Gentle | Gentle |
+| **Features** | 7+ features | 3 features | 2 features | 4 features |
+| **Files** | 100+ | 178 | 48 | 110 |
+| **Backend** | Mock/Fake | REST API | Supabase BaaS | Dart Shelf |
+| **Best For** | Production apps | Enterprise teams | Learning | Educational |
+| **Code Generation** | Yes (Riverpod) | No | No | Yes (Freezed) |
+| **Null Safety** | Yes | Yes | Yes | Yes |
 
 ---
 
@@ -532,13 +652,21 @@ flutter_arch_doc/
 │   ├── 05-data-flow-guide.md
 │   └── 06-getting-started-guide.md
 │
-└── rivaan_ranawat/                        # Blog App (BLoC + Supabase)
+├── rivaan_ranawat/                        # Blog App (BLoC + Supabase)
+│   ├── 01-architecture-overview.md
+│   ├── 02-clean-architecture-explained.md
+│   ├── 03-layer-breakdown.md
+│   ├── 04-design-patterns-guide.md
+│   ├── 05-feature-deep-dive.md
+│   └── 06-beginner-guide.md
+│
+└── flutter_team/                          # Compass App (MVVM + Provider)
     ├── 01-architecture-overview.md
-    ├── 02-clean-architecture-explained.md
-    ├── 03-layer-breakdown.md
-    ├── 04-design-patterns-guide.md
-    ├── 05-feature-deep-dive.md
-    └── 06-beginner-guide.md
+    ├── 02-layer-breakdown.md
+    ├── 03-design-patterns.md
+    ├── 04-component-deep-dive.md
+    ├── 05-getting-started.md
+    └── 06-reference-guide.md
 ```
 
 ---
@@ -554,10 +682,11 @@ flutter_arch_doc/
 6. **Rodrigo Manguinho** - 02-layer-breakdown.md
 
 ### Path 2: State Management Focused
-1. **Rivaan Ranawat** - BLoC pattern with functional programming
-2. **Andrea Bizzotto** - Riverpod with code generation
-3. **Rodrigo Manguinho** - GetX with reactive streams
-4. Compare all three approaches
+1. **Flutter Team** - Provider with ViewModels (simplest)
+2. **Rivaan Ranawat** - BLoC pattern with functional programming
+3. **Andrea Bizzotto** - Riverpod with code generation
+4. **Rodrigo Manguinho** - GetX with reactive streams
+5. Compare all four approaches
 
 ### Path 3: Enterprise Architecture
 1. **Rodrigo Manguinho** - 01-architecture-overview.md (SOLID principles)
@@ -599,6 +728,13 @@ flutter_arch_doc/
 - Service locator pattern
 - Real-world cloud integration
 
+**Flutter Team:**
+- MVVM pattern with ViewModels
+- Provider state management
+- Result pattern for error handling
+- Official Flutter best practices
+- Educational architecture examples
+
 ---
 
 ## 🤝 Contributing
@@ -622,14 +758,23 @@ This documentation is provided for educational purposes. Please refer to the ori
 
 ## 🙏 Credits
 
+This documentation is based on the following open-source projects:
+
 ### Andrea Bizzotto - E-Commerce App
 Modern Flutter architecture with Riverpod, GoRouter, and feature-first organization. Known for CodeWithAndrea courses and YouTube tutorials.
+- Repository: [github.com/bizz84/complete-flutter-course](https://github.com/bizz84/complete-flutter-course)
 
 ### Rodrigo Manguinho - ForDev Survey App
 Clean Architecture masterclass with SOLID principles and TDD. Popular in Brazilian Flutter community for enterprise-grade patterns.
+- Repository: [github.com/rmanguinho/clean-flutter-app](https://github.com/rmanguinho/clean-flutter-app)
 
 ### Rivaan Ranawat - Blog App
 Clean Architecture with BLoC pattern and Supabase integration. Known for practical Flutter tutorials on YouTube with real-world backend integration.
+- Repository: [github.com/RivaanRanawat/blog-app-clean-architecture](https://github.com/RivaanRanawat/blog-app-clean-architecture)
+
+### Flutter Team - Compass Travel App
+Official Flutter sample demonstrating MVVM with Provider. Educational example from the Flutter team showcasing architecture best practices.
+- Repository: [github.com/flutter/samples/tree/main/compass_app](https://github.com/flutter/samples/tree/main/compass_app)
 
 ---
 
@@ -666,6 +811,6 @@ Clean Architecture with BLoC pattern and Supabase integration. Known for practic
 
 **Happy Learning!** 🚀
 
-*Repository created to document Flutter architecture best practices from community-recognized experts.*
+*Repository created to document Flutter architecture best practices from community-recognized experts and the official Flutter team.*
 
-*Last Updated: 2025-11-18*
+*Last Updated: 2025-11-20*
