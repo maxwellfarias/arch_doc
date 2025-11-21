@@ -1,6 +1,7 @@
 How to Think Like an Architect
 
 Speaker: Mark Richards
+
 You don't have to be a software architect to think like a software architect. Doing so gives you several advantages: first, a more effective and well-built system even as a developer; and second, a good head start on a really fun and rewarding career path. That is what I want to show you in this Keynote.
 
 
