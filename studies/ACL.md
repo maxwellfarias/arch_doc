@@ -1,48 +1,48 @@
-# Anti-Corruption Layer em Dart - Guia Completo
+# Anti-Corruption Layer in Dart - Complete Guide
 
-## Índice
+## Table of Contents
 
-1. [Introdução](#introdução)
-2. [Conceitos Fundamentais](#conceitos-fundamentais)
-3. [Estrutura do Projeto](#estrutura-do-projeto)
-4. [Implementação Completa](#implementação-completa)
-5. [Princípios Arquiteturais](#princípios-arquiteturais)
-6. [Testes](#testes)
-7. [Benefícios e Trade-offs](#benefícios-e-trade-offs)
-8. [Boas Práticas](#boas-práticas)
-
----
-
-## Introdução
-
-O **Anti-Corruption Layer (ACL)** é um padrão arquitetural do Domain-Driven Design (DDD) que protege o modelo de domínio de influências externas indesejadas. Ele atua como uma barreira de tradução entre seu domínio puro e sistemas externos (APIs, bancos de dados, serviços third-party).
-
-### Quando Usar?
-
-- ✅ Aplicações que você espera manter e evoluir
-- ✅ Integração com APIs de terceiros
-- ✅ Sistemas que precisam isolar mudanças externas
-- ✅ Projetos que seguem Clean Architecture ou DDD
-- ❌ Protótipos de vida curta
-- ❌ MVPs com prazo muito apertado (mas considere para v2)
-
-### Por que Mapear Mesmo Quando os Objetos São Idênticos?
-
-Mesmo que o DTO da API seja idêntico à entidade de domínio **hoje**, há razões importantes para manter o mapeamento:
-
-#### Desvantagens de NÃO fazer o mapeamento:
-
-1. **Acoplamento Forte**: Seu domínio fica "refém" de decisões externas
-2. **Quebra de Contrato Inesperada**: Mudanças na API quebram múltiplos pontos do sistema
-3. **Contaminação do Domínio**: Anotações JSON, validações de API no modelo de negócio
-4. **Dificuldade de Evolução**: Refatoração massiva quando precisar divergir
-5. **Testes Mais Difíceis**: Lógica de negócio acoplada a estruturas externas
+1. [Introduction](#introduction)
+2. [Fundamental Concepts](#fundamental-concepts)
+3. [Project Structure](#project-structure)
+4. [Complete Implementation](#complete-implementation)
+5. [Architectural Principles](#architectural-principles)
+6. [Tests](#tests)
+7. [Benefits and Trade-offs](#benefits-and-trade-offs)
+8. [Best Practices](#best-practices)
 
 ---
 
-## Conceitos Fundamentais
+## Introduction
 
-### 1. Separação de Responsabilidades
+The **Anti-Corruption Layer (ACL)** is an architectural pattern from Domain-Driven Design (DDD) that protects the domain model from unwanted external influences. It acts as a translation barrier between your pure domain and external systems (APIs, databases, third-party services).
+
+### When to Use?
+
+- ✅ Applications you expect to maintain and evolve
+- ✅ Integration with third-party APIs
+- ✅ Systems that need to isolate external changes
+- ✅ Projects following Clean Architecture or DDD
+- ❌ Short-lived prototypes
+- ❌ MVPs with very tight deadlines (but consider for v2)
+
+### Why Map Even When Objects Are Identical?
+
+Even if the API DTO is identical to the domain entity **today**, there are important reasons to maintain the mapping:
+
+#### Disadvantages of NOT doing the mapping:
+
+1. **Tight Coupling**: Your domain becomes "hostage" to external decisions
+2. **Unexpected Contract Breaking**: API changes break multiple system points
+3. **Domain Contamination**: JSON annotations, API validations in business model
+4. **Difficult Evolution**: Massive refactoring when needing to diverge
+5. **Harder Testing**: Business logic coupled to external structures
+
+---
+
+## Fundamental Concepts
+
+### 1. Separation of Responsibilities
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -54,8 +54,8 @@ Mesmo que o DTO da API seja idêntico à entidade de domínio **hoje**, há raz�
 ┌─────────────────────────────────────────────────────────┐
 │                     DOMAIN LAYER                         │
 │            (Entities, Value Objects, UseCases)          │
-│           → Linguagem Ubíqua do Negócio                 │
-│           → Sem Dependências Externas                   │
+│           → Ubiquitous Business Language                │
+│           → No External Dependencies                    │
 └───────────────────────────┬─────────────────────────────┘
                             │
                             ▼
@@ -63,11 +63,11 @@ Mesmo que o DTO da API seja idêntico à entidade de domínio **hoje**, há raz�
 │                      DATA LAYER                          │
 │     ┌──────────────────────────────────────────┐       │
 │     │   ANTI-CORRUPTION LAYER (Mappers)       │       │
-│     │   → Traduz DTO ↔ Domain                 │       │
-│     │   → Isola Mudanças Externas             │       │
+│     │   → Translates DTO ↔ Domain             │       │
+│     │   → Isolates External Changes           │       │
 │     └──────────────────────────────────────────┘       │
 │                                                          │
-│   DTOs (Estrutura da API) ← → Entities (Negócio)      │
+│   DTOs (API Structure) ← → Entities (Business)         │
 └───────────────────────────┬─────────────────────────────┘
                             │
                             ▼
@@ -79,18 +79,18 @@ Mesmo que o DTO da API seja idêntico à entidade de domínio **hoje**, há raz�
 
 ### 2. DTO vs Entity
 
-| Aspecto | DTO (Data Transfer Object) | Entity (Domain) |
+| Aspect | DTO (Data Transfer Object) | Entity (Domain) |
 |---------|---------------------------|-----------------|
-| **Propósito** | Transporte de dados | Lógica de negócio |
-| **Nomenclatura** | Segue convenção da API (snake_case) | Segue convenção Dart (camelCase) |
-| **Validação** | Estrutural (JSON válido) | Regras de negócio |
-| **Mutabilidade** | Geralmente imutável | Pode ter comportamentos |
-| **Dependências** | Anotações de serialização | Zero dependências externas |
-| **Estabilidade** | Muda com a API | Muda com o negócio |
+| **Purpose** | Data transport | Business logic |
+| **Naming** | Follows API convention (snake_case) | Follows Dart convention (camelCase) |
+| **Validation** | Structural (valid JSON) | Business rules |
+| **Mutability** | Generally immutable | Can have behaviors |
+| **Dependencies** | Serialization annotations | Zero external dependencies |
+| **Stability** | Changes with API | Changes with business |
 
 ---
 
-## Estrutura do Projeto
+## Project Structure
 
 ```
 lib/
@@ -132,9 +132,9 @@ lib/
 
 ---
 
-## Implementação Completa
+## Complete Implementation
 
-### 1. Core - Tratamento de Erros
+### 1. Core - Error Handling
 
 #### failures.dart
 
@@ -254,7 +254,7 @@ class Right<L, R> extends Either<L, R> {
 
 ---
 
-### 2. Domain Layer - Modelos Puros de Negócio
+### 2. Domain Layer - Pure Business Models
 
 #### Value Objects
 
@@ -275,8 +275,8 @@ class UserId {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserId && 
-      runtimeType == other.runtimeType && 
+      other is UserId &&
+      runtimeType == other.runtimeType &&
       value == other.value;
 
   @override
@@ -311,8 +311,8 @@ class Email {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Email && 
-      runtimeType == other.runtimeType && 
+      other is Email &&
+      runtimeType == other.runtimeType &&
       value == other.value;
 
   @override
@@ -386,7 +386,7 @@ class User {
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 
+  String toString() =>
       'User(id: $id, name: $name, email: $email, status: $status)';
 }
 ```
@@ -409,7 +409,7 @@ abstract class UserRepository {
 
 ---
 
-### 3. Data Layer - DTOs e Anti-Corruption Layer
+### 3. Data Layer - DTOs and Anti-Corruption Layer
 
 #### DTOs
 
@@ -419,8 +419,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'user_dto.g.dart';
 
-/// DTO que representa EXATAMENTE o contrato da API externa
-/// Usa snake_case, pode ter campos técnicos, etc.
+/// DTO that represents EXACTLY the external API contract
+/// Uses snake_case, may have technical fields, etc.
 @JsonSerializable()
 class UserDto {
   @JsonKey(name: 'user_id')
@@ -441,7 +441,7 @@ class UserDto {
   @JsonKey(name: 'last_login_timestamp')
   final String? lastLoginTimestamp;
 
-  // Campos técnicos da API que não interessam ao domínio
+  // Technical API fields that don't matter to the domain
   @JsonKey(name: '_internal_version')
   final int? internalVersion;
 
@@ -465,7 +465,7 @@ class UserDto {
   Map<String, dynamic> toJson() => _$UserDtoToJson(this);
 }
 
-/// DTO para criação de usuário (pode ter estrutura diferente)
+/// DTO for user creation (may have different structure)
 @JsonSerializable()
 class CreateUserDto {
   @JsonKey(name: 'full_name')
@@ -486,7 +486,7 @@ class CreateUserDto {
 }
 ```
 
-#### Mapper - O Coração do ACL
+#### Mapper - The Heart of the ACL
 
 ```dart
 // lib/features/user/data/mappers/user_mapper.dart
@@ -496,10 +496,10 @@ import '../../domain/value_objects/user_id.dart';
 import '../../../core/errors/exceptions.dart';
 import '../dtos/user_dto.dart';
 
-/// Mapper que implementa o Anti-Corruption Layer
-/// Converte entre o mundo externo (API) e o mundo interno (Domínio)
+/// Mapper that implements the Anti-Corruption Layer
+/// Converts between the external world (API) and internal world (Domain)
 abstract class UserMapper {
-  /// Converte DTO da API para Entidade de Domínio
+  /// Converts API DTO to Domain Entity
   static User toDomain(UserDto dto) {
     try {
       return User(
@@ -520,7 +520,7 @@ abstract class UserMapper {
     }
   }
 
-  /// Converte Entidade de Domínio para DTO da API
+  /// Converts Domain Entity to API DTO
   static UserDto toDto(User user) {
     try {
       return UserDto(
@@ -539,26 +539,26 @@ abstract class UserMapper {
     }
   }
 
-  /// Converte dados de criação para DTO
+  /// Converts creation data to DTO
   static CreateUserDto toCreateDto({
     required String name,
     required String email,
   }) {
-    // Valida antes de enviar para API
-    Email(email); // Valida formato do email
-    
+    // Validates before sending to API
+    Email(email); // Validates email format
+
     return CreateUserDto(
       fullName: name,
       emailAddress: email,
     );
   }
 
-  /// Converte lista de DTOs para lista de Entidades
+  /// Converts list of DTOs to list of Entities
   static List<User> toDomainList(List<UserDto> dtos) {
     return dtos.map((dto) => toDomain(dto)).toList();
   }
 
-  // Métodos privados para mapeamento de enums e valores específicos
+  // Private methods for mapping enums and specific values
   static UserStatus _mapStatus(int status) {
     switch (status) {
       case 0:
@@ -594,7 +594,7 @@ abstract class UserMapper {
 
 ---
 
-### 4. Data Source - Comunicação com API
+### 4. Data Source - API Communication
 
 #### Interface
 
@@ -611,7 +611,7 @@ abstract class UserRemoteDataSource {
 }
 ```
 
-#### Implementação
+#### Implementation
 
 ```dart
 // lib/features/user/data/datasources/user_remote_datasource_impl.dart
@@ -751,7 +751,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
 ---
 
-### 5. Repository Implementation - Orquestra o ACL
+### 5. Repository Implementation - Orchestrates the ACL
 
 ```dart
 // lib/features/user/data/repositories/user_repository_impl.dart
@@ -772,12 +772,12 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Either<Failure, User>> getUserById(UserId id) async {
     try {
-      // 1. Busca dados externos (DTO)
+      // 1. Fetch external data (DTO)
       final userDto = await remoteDataSource.getUserById(id.value);
-      
-      // 2. Anti-Corruption Layer: converte DTO -> Domain
+
+      // 2. Anti-Corruption Layer: convert DTO -> Domain
       final user = UserMapper.toDomain(userDto);
-      
+
       return Right(user);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -787,7 +787,7 @@ class UserRepositoryImpl implements UserRepository {
       return Left(MappingFailure(e.message));
     } catch (e, stackTrace) {
       return Left(ServerFailure(
-        'Unexpected error: ${e.toString()}', 
+        'Unexpected error: ${e.toString()}',
         stackTrace,
       ));
     }
@@ -807,7 +807,7 @@ class UserRepositoryImpl implements UserRepository {
       return Left(MappingFailure(e.message));
     } catch (e, stackTrace) {
       return Left(ServerFailure(
-        'Unexpected error: ${e.toString()}', 
+        'Unexpected error: ${e.toString()}',
         stackTrace,
       ));
     }
@@ -819,15 +819,15 @@ class UserRepositoryImpl implements UserRepository {
     required String email,
   }) async {
     try {
-      // 1. Valida e converte dados de entrada para DTO
+      // 1. Validate and convert input data to DTO
       final createDto = UserMapper.toCreateDto(name: name, email: email);
-      
-      // 2. Envia para API
+
+      // 2. Send to API
       final userDto = await remoteDataSource.createUser(createDto);
-      
-      // 3. Anti-Corruption Layer: converte resposta para Domain
+
+      // 3. Anti-Corruption Layer: convert response to Domain
       final user = UserMapper.toDomain(userDto);
-      
+
       return Right(user);
     } on ArgumentError catch (e) {
       return Left(ValidationFailure(e.message));
@@ -839,7 +839,7 @@ class UserRepositoryImpl implements UserRepository {
       return Left(MappingFailure(e.message));
     } catch (e, stackTrace) {
       return Left(ServerFailure(
-        'Unexpected error: ${e.toString()}', 
+        'Unexpected error: ${e.toString()}',
         stackTrace,
       ));
     }
@@ -848,18 +848,18 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Either<Failure, User>> updateUser(User user) async {
     try {
-      // 1. Anti-Corruption Layer: converte Domain -> DTO
+      // 1. Anti-Corruption Layer: convert Domain -> DTO
       final userDto = UserMapper.toDto(user);
-      
-      // 2. Envia para API
+
+      // 2. Send to API
       final updatedDto = await remoteDataSource.updateUser(
         user.id.value,
         userDto,
       );
-      
-      // 3. Converte resposta de volta para Domain
+
+      // 3. Convert response back to Domain
       final updatedUser = UserMapper.toDomain(updatedDto);
-      
+
       return Right(updatedUser);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -869,7 +869,7 @@ class UserRepositoryImpl implements UserRepository {
       return Left(MappingFailure(e.message));
     } catch (e, stackTrace) {
       return Left(ServerFailure(
-        'Unexpected error: ${e.toString()}', 
+        'Unexpected error: ${e.toString()}',
         stackTrace,
       ));
     }
@@ -886,7 +886,7 @@ class UserRepositoryImpl implements UserRepository {
       return Left(NetworkFailure(e.message));
     } catch (e, stackTrace) {
       return Left(ServerFailure(
-        'Unexpected error: ${e.toString()}', 
+        'Unexpected error: ${e.toString()}',
         stackTrace,
       ));
     }
@@ -949,47 +949,47 @@ class CreateUser {
 
 ---
 
-## Princípios Arquiteturais
+## Architectural Principles
 
 ### 1. Separation of Concerns (SoC)
 
-Cada camada tem responsabilidades distintas:
-- **Domain**: Lógica de negócio pura
-- **Data**: Acesso e persistência de dados
-- **Mapper**: Tradução entre camadas
+Each layer has distinct responsibilities:
+- **Domain**: Pure business logic
+- **Data**: Data access and persistence
+- **Mapper**: Translation between layers
 
 ### 2. Dependency Inversion Principle (DIP)
 
 ```
-Domain (alto nível) → não depende de → Data (baixo nível)
+Domain (high level) → does not depend on → Data (low level)
            ↓
-    Ambos dependem de abstrações (interfaces)
+    Both depend on abstractions (interfaces)
 ```
 
 ### 3. Open/Closed Principle
 
-O domínio está:
-- ✅ Aberto para extensão (novas funcionalidades)
-- ❌ Fechado para modificação (mudanças externas)
+The domain is:
+- ✅ Open for extension (new features)
+- ❌ Closed for modification (external changes)
 
 ### 4. Single Responsibility Principle
 
-- **Entity**: Representa conceitos de negócio
-- **DTO**: Representa estrutura de transporte
-- **Mapper**: Faz apenas a tradução
+- **Entity**: Represents business concepts
+- **DTO**: Represents transport structure
+- **Mapper**: Does only translation
 
 ### 5. Domain-Driven Design (DDD)
 
-O modelo de domínio deve:
-- Refletir a linguagem ubíqua do negócio
-- Ser independente de detalhes técnicos
-- Conter apenas lógica de negócio
+The domain model should:
+- Reflect the ubiquitous language of the business
+- Be independent of technical details
+- Contain only business logic
 
 ---
 
-## Testes
+## Tests
 
-### Testes do Mapper
+### Mapper Tests
 
 ```dart
 // test/features/user/data/mappers/user_mapper_test.dart
@@ -1044,7 +1044,7 @@ void main() {
           userId: '123',
           fullName: 'John Doe',
           emailAddress: 'john@example.com',
-          accountStatus: 999, // Status desconhecido
+          accountStatus: 999, // Unknown status
           createdTimestamp: '2024-01-01T00:00:00Z',
         );
 
@@ -1191,14 +1191,14 @@ void main() {
 }
 ```
 
-### Testes do Repository
+### Repository Tests
 
 ```dart
 // test/features/user/data/repositories/user_repository_impl_test.dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockUserRemoteDataSource extends Mock 
+class MockUserRemoteDataSource extends Mock
     implements UserRemoteDataSource {}
 
 void main() {
@@ -1242,7 +1242,7 @@ void main() {
       verify(() => mockRemoteDataSource.getUserById('123')).called(1);
     });
 
-    test('should return ServerFailure when ServerException is thrown', 
+    test('should return ServerFailure when ServerException is thrown',
         () async {
       // Arrange
       when(() => mockRemoteDataSource.getUserById(any()))
@@ -1262,7 +1262,7 @@ void main() {
       );
     });
 
-    test('should return NetworkFailure when NetworkException is thrown', 
+    test('should return NetworkFailure when NetworkException is thrown',
         () async {
       // Arrange
       when(() => mockRemoteDataSource.getUserById(any()))
@@ -1287,11 +1287,11 @@ void main() {
       final invalidDto = UserDto(
         userId: '123',
         fullName: 'John Doe',
-        emailAddress: 'invalid-email', // Email inválido
+        emailAddress: 'invalid-email', // Invalid email
         accountStatus: 1,
         createdTimestamp: '2024-01-01T00:00:00Z',
       );
-      
+
       when(() => mockRemoteDataSource.getUserById(any()))
           .thenAnswer((_) async => invalidDto);
 
@@ -1362,52 +1362,52 @@ void main() {
 
 ---
 
-## Benefícios e Trade-offs
+## Benefits and Trade-offs
 
-### ✅ Benefícios
+### ✅ Benefits
 
-| Benefício | Descrição |
+| Benefit | Description |
 |-----------|-----------|
-| **Isolamento** | Mudanças na API não afetam o domínio |
-| **Flexibilidade** | Fácil trocar APIs ou adicionar novas fontes |
-| **Testabilidade** | Cada camada testável independentemente |
-| **Manutenibilidade** | Mudanças localizadas, sem efeito cascata |
-| **Type Safety** | Value Objects e Enums garantem tipos seguros |
-| **Expressividade** | Código reflete linguagem de negócio |
-| **Resiliência** | Sistema continua funcionando mesmo com mudanças na API |
+| **Isolation** | API changes don't affect the domain |
+| **Flexibility** | Easy to switch APIs or add new sources |
+| **Testability** | Each layer independently testable |
+| **Maintainability** | Localized changes, no cascade effect |
+| **Type Safety** | Value Objects and Enums ensure safe types |
+| **Expressiveness** | Code reflects business language |
+| **Resilience** | System keeps working despite API changes |
 
 ### ⚠️ Trade-offs
 
-| Desvantagem | Mitigação |
+| Disadvantage | Mitigation |
 |-------------|-----------|
-| **Código Extra** | Use code generation para DTOs |
-| **Complexidade Inicial** | Documentação e padrões claros |
-| **Performance** | Impacto mínimo; considere cache se necessário |
-| **Curva de Aprendizado** | Treinamento da equipe |
+| **Extra Code** | Use code generation for DTOs |
+| **Initial Complexity** | Clear documentation and patterns |
+| **Performance** | Minimal impact; consider cache if needed |
+| **Learning Curve** | Team training |
 
 ---
 
-## Boas Práticas
+## Best Practices
 
-### 1. Organize os Mappers
+### 1. Organize Mappers
 
 ```dart
-// ✅ BOM: Mapper como classe abstrata com métodos estáticos
+// ✅ GOOD: Mapper as abstract class with static methods
 abstract class UserMapper {
   static User toDomain(UserDto dto) { ... }
   static UserDto toDto(User user) { ... }
 }
 
-// ❌ EVITE: Mapper como instância (overhead desnecessário)
+// ❌ AVOID: Mapper as instance (unnecessary overhead)
 class UserMapper {
   User toDomain(UserDto dto) { ... }
 }
 ```
 
-### 2. Valide Cedo
+### 2. Validate Early
 
 ```dart
-// ✅ BOM: Valida no Value Object
+// ✅ GOOD: Validate in Value Object
 class Email {
   factory Email(String value) {
     if (!_isValid(value)) {
@@ -1417,29 +1417,29 @@ class Email {
   }
 }
 
-// ❌ EVITE: Validação dispersa pelo código
+// ❌ AVOID: Scattered validation throughout code
 if (!isValidEmail(email)) { ... }
 ```
 
-### 3. Use Enums Expressivos
+### 3. Use Expressive Enums
 
 ```dart
-// ✅ BOM: Enum com comportamento
+// ✅ GOOD: Enum with behavior
 enum UserStatus {
   active,
   inactive;
-  
+
   bool get canLogin => this == active;
 }
 
-// ❌ EVITE: Strings ou números mágicos
+// ❌ AVOID: Magic strings or numbers
 const STATUS_ACTIVE = 1;
 ```
 
-### 4. Trate Erros Específicos
+### 4. Handle Specific Errors
 
 ```dart
-// ✅ BOM: Hierarquia de erros clara
+// ✅ GOOD: Clear error hierarchy
 try {
   return UserMapper.toDomain(dto);
 } on MappingException catch (e) {
@@ -1448,7 +1448,7 @@ try {
   return Left(ValidationFailure(e.message));
 }
 
-// ❌ EVITE: Catch genérico
+// ❌ AVOID: Generic catch
 try {
   return UserMapper.toDomain(dto);
 } catch (e) {
@@ -1456,12 +1456,12 @@ try {
 }
 ```
 
-### 5. Documente o Contrato
+### 5. Document the Contract
 
 ```dart
-/// DTO que representa EXATAMENTE o contrato da API
-/// 
-/// Estrutura esperada:
+/// DTO that represents EXACTLY the API contract
+///
+/// Expected structure:
 /// ```json
 /// {
 ///   "user_id": "string",
@@ -1472,18 +1472,18 @@ try {
 class UserDto { ... }
 ```
 
-### 6. Mantenha DTOs Imutáveis
+### 6. Keep DTOs Immutable
 
 ```dart
-// ✅ BOM: DTO imutável
+// ✅ GOOD: Immutable DTO
 class UserDto {
   final String userId;
   final String fullName;
-  
+
   const UserDto({required this.userId, required this.fullName});
 }
 
-// ❌ EVITE: DTO mutável
+// ❌ AVOID: Mutable DTO
 class UserDto {
   String userId;
   String fullName;
@@ -1503,24 +1503,24 @@ dev_dependencies:
 ```
 
 ```bash
-# Gere código automaticamente
+# Generate code automatically
 dart run build_runner build --delete-conflicting-outputs
 ```
 
 ---
 
-## Exemplo Prático: Mudança na API
+## Practical Example: API Change
 
-### Cenário: API mudou o campo de email
+### Scenario: API changed the email field
 
-#### Antes (API v1):
+#### Before (API v1):
 ```json
 {
   "email_address": "john@example.com"
 }
 ```
 
-#### Depois (API v2):
+#### After (API v2):
 ```json
 {
   "contact": {
@@ -1529,15 +1529,15 @@ dart run build_runner build --delete-conflicting-outputs
 }
 ```
 
-### Solução com ACL:
+### Solution with ACL:
 
 ```dart
-// 1. Atualize APENAS o DTO
+// 1. Update ONLY the DTO
 class UserDto {
   @JsonKey(name: 'contact')
   final ContactDto? contact;
-  
-  // Campo antigo mantido para compatibilidade
+
+  // Old field kept for compatibility
   @JsonKey(name: 'email_address')
   final String? emailAddress;
 }
@@ -1547,65 +1547,65 @@ class ContactDto {
   final String primaryEmail;
 }
 
-// 2. Atualize APENAS o Mapper
+// 2. Update ONLY the Mapper
 static User toDomain(UserDto dto) {
-  // Prioriza novo formato, fallback para antigo
+  // Prioritize new format, fallback to old
   final email = dto.contact?.primaryEmail ?? dto.emailAddress ?? '';
-  
+
   return User(
-    // ... outros campos
+    // ... other fields
     email: Email(email),
   );
 }
 ```
 
-**Resultado**: Domínio permanece intacto! ✅
+**Result**: Domain remains intact! ✅
 
 ---
 
-## Conclusão
+## Conclusion
 
-O Anti-Corruption Layer é um investimento em:
-- 🛡️ **Proteção**: Seu domínio está isolado de mudanças externas
-- 🔧 **Manutenibilidade**: Mudanças localizadas e previsíveis
-- 📈 **Escalabilidade**: Fácil adicionar novas fontes de dados
-- 🧪 **Testabilidade**: Cada camada testável independentemente
+The Anti-Corruption Layer is an investment in:
+- 🛡️ **Protection**: Your domain is isolated from external changes
+- 🔧 **Maintainability**: Localized and predictable changes
+- 📈 **Scalability**: Easy to add new data sources
+- 🧪 **Testability**: Each layer independently testable
 
-### Quando Implementar?
+### When to Implement?
 
-- ✅ Sempre que integrar com APIs externas
-- ✅ Projetos de médio a longo prazo
-- ✅ Equipes que valorizam código limpo
-- ✅ Sistemas que precisam de manutenibilidade
+- ✅ Always when integrating with external APIs
+- ✅ Medium to long-term projects
+- ✅ Teams that value clean code
+- ✅ Systems that need maintainability
 
-### Lembre-se:
+### Remember:
 
-> "O custo de implementar um ACL é pequeno comparado ao custo de refatorar um sistema inteiro quando a API mudar."
+> "The cost of implementing an ACL is small compared to the cost of refactoring an entire system when the API changes."
 
 ---
 
-## Recursos Adicionais
+## Additional Resources
 
-### Livros
+### Books
 - **Domain-Driven Design** - Eric Evans
 - **Clean Architecture** - Robert C. Martin
 - **Implementing Domain-Driven Design** - Vaughn Vernon
 
-### Artigos
+### Articles
 - [Martin Fowler - Anti-Corruption Layer](https://martinfowler.com/bliki/AnticorruptionLayer.html)
 - [Microsoft - Anti-Corruption Layer Pattern](https://docs.microsoft.com/azure/architecture/patterns/anti-corruption-layer)
 
-### Packages Dart Úteis
+### Useful Dart Packages
 ```yaml
 dependencies:
-  # Serialização JSON
+  # JSON Serialization
   json_annotation: ^4.8.0
-  
+
   # Either/Result type
   dartz: ^0.10.1
-  # ou
+  # or
   fpdart: ^1.1.0
-  
+
   # Dependency Injection
   get_it: ^7.6.0
   injectable: ^2.3.2
@@ -1614,13 +1614,13 @@ dev_dependencies:
   # Code generation
   build_runner: ^2.4.0
   json_serializable: ^6.7.0
-  
+
   # Testing
   mocktail: ^1.0.1
 ```
 
 ---
 
-**Criado por:** Documentação de Arquitetura de Software  
-**Data:** 2024  
-**Versão:** 1.0
+**Created by:** Software Architecture Documentation
+**Date:** 2024
+**Version:** 1.0
