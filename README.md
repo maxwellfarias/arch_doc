@@ -2,7 +2,7 @@
 
 ## 📚 Overview
 
-This repository studies **Clean Architecture** and **Modern Flutter Architecture** patterns through analysis of four real-world Flutter projects from established developers in the community. The goal is to document and understand different architectural approaches used by experienced Flutter developers.
+This repository studies **Clean Architecture** and **Modern Flutter Architecture** patterns through analysis of **five** real-world Flutter projects from established developers in the community. The goal is to document and understand different architectural approaches used by experienced Flutter developers.
 
 **This project is fully open for contributions.**
 
@@ -13,26 +13,27 @@ All documentation in this repository is based on the following open-source proje
 - **Rivaan Ranawat** - Blog App with Clean Architecture + BLoC: [github.com/RivaanRanawat/blog-app-clean-architecture](https://github.com/RivaanRanawat/blog-app-clean-architecture)
 - **Andrea Bizzotto** - E-Commerce App with Riverpod: [github.com/bizz84/complete-flutter-course](https://github.com/bizz84/complete-flutter-course)
 - **Rodrigo Manguinho** - ForDev Survey App with TDD: [github.com/rmanguinho/clean-flutter-app](https://github.com/rmanguinho/clean-flutter-app)
+- **Rodrigo Manguinho** - Advanced Flutter TDD + Clean Architecture: [github.com/rmanguinho/advanced-flutter](https://github.com/rmanguinho/advanced-flutter)
 - **Flutter Team** - Compass Travel App with MVVM: [github.com/flutter/samples/tree/main/compass_app](https://github.com/flutter/samples/tree/main/compass_app)
 
 ---
 
-## 🎯 Four Architectural Approaches
+## 🎯 Five Architectural Approaches
 
 ### Comparison Table
 
-| Aspect | Andrea Bizzotto | Rodrigo Manguinho | Rivaan Ranawat | Flutter Team |
-|--------|-----------------|-------------------|----------------|--------------|
-| **Project Type** | E-Commerce App | Survey App (ForDev) | Blog App | Travel Booking App |
-| **Architecture** | Feature-First Layered | Clean Architecture + TDD | Clean Architecture + BLoC | Clean Architecture + MVVM |
-| **State Management** | Riverpod 2.6 | GetX 4.3.8 | flutter_bloc 8.1.4 | Provider + ChangeNotifier |
-| **Navigation** | GoRouter 15.0 | GetX Navigation | Standard Navigator | go_router |
-| **Backend** | Fake/Mock API | REST API | Supabase (BaaS) | Dart Shelf server (optional) |
-| **Local Storage** | Sembast 3.8 | flutter_secure_storage + localstorage | Hive 4.0 | shared_preferences |
-| **DI Strategy** | Code Generation | Manual Factories | get_it 7.6.7 | Provider DI |
-| **Error Handling** | AsyncValue | Custom Failures | fpdart Either monad | Result pattern |
-| **Testing** | Unit, Widget, Integration | TDD with Mocktail | Unit tests | Unit, Widget tests |
-| **Focus** | Modern reactive patterns | SOLID principles | Functional programming + BaaS | MVVM + educational clarity |
+| Aspect | Andrea Bizzotto | Rodrigo Manguinho (ForDev) | Rodrigo Manguinho (Advanced) | Rivaan Ranawat | Flutter Team |
+|--------|-----------------|---------------------------|------------------------------|----------------|--------------|
+| **Project Type** | E-Commerce App | Survey App (ForDev) | Sports Event App | Blog App | Travel Booking App |
+| **Architecture** | Feature-First Layered | Clean Architecture + TDD | Clean Architecture + MVP | Clean Architecture + BLoC | Clean Architecture + MVVM |
+| **State Management** | Riverpod 2.6 | GetX 4.3.8 | RxDart + Streams | flutter_bloc 8.1.4 | Provider + ChangeNotifier |
+| **Navigation** | GoRouter 15.0 | GetX Navigation | Standard Navigator | Standard Navigator | go_router |
+| **Backend** | Fake/Mock API | REST API | Express.js Mock Server | Supabase (BaaS) | Dart Shelf server (optional) |
+| **Local Storage** | Sembast 3.8 | flutter_secure_storage + localstorage | Flutter Cache Manager | Hive 4.0 | shared_preferences |
+| **DI Strategy** | Code Generation | Manual Factories | Manual Factories (Composition Root) | get_it 7.6.7 | Provider DI |
+| **Error Handling** | AsyncValue | Custom Failures | Sealed Classes (Dart 3) | fpdart Either monad | Result pattern |
+| **Testing** | Unit, Widget, Integration | TDD with Mocktail | Custom Spies (No Mockito) | Unit tests | Unit, Widget tests |
+| **Focus** | Modern reactive patterns | SOLID principles | TDD + Advanced patterns | Functional programming + BaaS | MVVM + educational clarity |
 
 ---
 
@@ -133,7 +134,64 @@ A production-ready survey application built with **Clean Architecture** principl
 
 ---
 
-## 📱 Project 3: Blog Application (Rivaan Ranawat)
+## 📱 Project 3: Advanced Flutter TDD + Clean Architecture (Rodrigo Manguinho)
+
+**Location:** [rodrigo_manguinho_new_course/](rodrigo_manguinho_new_course/)
+
+### Overview
+An educational sports event application built with **advanced Clean Architecture**, **MVP pattern**, and **pure TDD methodology**. This project represents Rodrigo's latest course focusing on professional-grade architecture with cutting-edge Dart 3 features and manual dependency injection without frameworks.
+
+### What Makes It Special
+- **4-Layer Architecture:** Domain → Infrastructure → Presentation → UI with strict separation
+- **MVP Pattern:** Presenter mediates between domain and UI using RxDart streams
+- **Sealed Classes:** Dart 3 sealed classes for type-safe, exhaustive error handling
+- **Custom Test Doubles:** No Mockito—uses custom spy implementations for full control
+- **Composition Root:** Pure manual dependency injection via factory pattern
+- **Initials Generation:** Business logic embedded in domain entities
+- **Offline-First Strategy:** API-first with automatic cache fallback
+
+### Core Features
+- Display next sports event with player confirmation status
+- Players categorized by role (goalkeepers vs field players)
+- Confirmation status tracking (confirmed, declined, undecided)
+- Automatic player initials generation from names
+- Pull-to-refresh with loading states
+- Complete offline support with cache validation
+- Error handling with domain-specific errors
+
+### Key Technologies
+- **RxDart ^0.28.0** - BehaviorSubject for reactive state management
+- **HTTP ^1.2.2** - REST API communication
+- **Flutter Cache Manager ^3.4.1** - File-based caching with expiration
+- **dartx** - Dart extensions for cleaner code
+- **Node.js + Express** - Mock backend server for development
+
+### Project Statistics
+- **4 layers** (Domain, Infrastructure, Presentation, UI)
+- **Custom spy-based testing** - No mocking frameworks
+- **Sealed classes** for compile-time exhaustive checking
+- **Factory pattern** for all dependency injection
+- **100% TDD approach** - Tests written before implementation
+
+### Best For
+- Learning advanced TDD methodology
+- Understanding MVP pattern with streams
+- Mastering manual dependency injection
+- Implementing offline-first architecture
+- Using Dart 3 sealed classes effectively
+- Building testable, maintainable applications
+- Understanding component interactions deeply
+
+### Documentation
+1. [01-ARCHITECTURE-OVERVIEW.md](rodrigo_manguinho_new_course/01-ARCHITECTURE-OVERVIEW.md) - Complete architecture introduction
+2. [02-LAYER-BREAKDOWN.md](rodrigo_manguinho_new_course/02-LAYER-BREAKDOWN.md) - Detailed layer explanation
+3. [03-DESIGN-PATTERNS.md](rodrigo_manguinho_new_course/03-DESIGN-PATTERNS.md) - 10+ design patterns catalog
+4. [04-COMPONENT-DEEP-DIVE.md](rodrigo_manguinho_new_course/04-COMPONENT-DEEP-DIVE.md) - Complete data flow walkthrough
+5. [05-GETTING-STARTED-GUIDE.md](rodrigo_manguinho_new_course/05-GETTING-STARTED-GUIDE.md) - Beginner's hands-on tutorial
+
+---
+
+## 📱 Project 4: Blog Application (Rivaan Ranawat)
 
 **Location:** [rivaan_ranawat/](rivaan_ranawat/)
 
@@ -188,7 +246,7 @@ A full-featured blogging platform demonstrating **Clean Architecture with BLoC p
 
 ---
 
-## 📱 Project 4: Compass Travel Application (Flutter Team)
+## 📱 Project 5: Compass Travel Application (Flutter Team)
 
 **Location:** [flutter_team/](flutter_team/)
 
@@ -235,7 +293,7 @@ An official Flutter sample application demonstrating **Clean Architecture with M
 
 ## 🔑 Key Architectural Concepts
 
-All four projects demonstrate these fundamental principles:
+All five projects demonstrate these fundamental principles:
 
 ### 1. Separation of Concerns
 - Clear layer boundaries
@@ -281,7 +339,7 @@ features/
 └── cart/
 ```
 
-**Rodrigo Manguinho (Layer-First):**
+**Rodrigo Manguinho ForDev (Layer-First):**
 ```
 lib/
 ├── domain/        # All entities & use cases
@@ -289,6 +347,16 @@ lib/
 ├── infra/         # All adapters
 ├── presentation/  # All presenters
 └── ui/            # All UI components
+```
+
+**Rodrigo Manguinho Advanced (Layer-First):**
+```
+lib/
+├── domain/        # Pure business entities & errors
+├── infra/         # API, cache, mappers, repositories
+├── presentation/  # Presenters & ViewModels (RxDart)
+├── ui/            # Pages & components
+└── main/          # Composition root (factories)
 ```
 
 **Rivaan Ranawat (Feature-First with BLoC):**
@@ -330,11 +398,23 @@ class ProductsList extends _$ProductsList {
 }
 ```
 
-**GetX (Rodrigo):** Reactive streams with GetX controllers
+**GetX (Rodrigo ForDev):** Reactive streams with GetX controllers
 ```dart
 class GetxLoginPresenter {
   final _emailError = BehaviorSubject<UIError?>();
   Stream<UIError?> get emailErrorStream => _emailError.stream;
+}
+```
+
+**RxDart + MVP (Rodrigo Advanced):** Pure reactive streams with MVP pattern
+```dart
+class NextEventRxPresenter implements NextEventPresenter {
+  final nextEventSubject = BehaviorSubject<NextEventViewModel>();
+
+  Future<void> loadNextEvent({required String groupId}) async {
+    final event = await nextEventLoader(groupId: groupId);
+    nextEventSubject.add(_mapEvent(event));  // Transform & emit
+  }
 }
 ```
 
@@ -383,13 +463,34 @@ return productsValue.when(
 );
 ```
 
-**Custom Failures (Rodrigo):**
+**Custom Failures (Rodrigo ForDev):**
 ```dart
 try {
   final account = await authentication.auth(params);
 } on DomainError catch (error) {
   _mainError.add(UIError.unexpected);
 }
+```
+
+**Sealed Classes (Rodrigo Advanced):**
+```dart
+sealed class DomainError {
+  String description();
+}
+
+final class UnexpectedError implements DomainError {
+  String description() => 'Algo inesperado aconteceu';
+}
+
+final class SessionExpiredError implements DomainError {
+  String description() => 'Sua sessão expirou';
+}
+
+// Exhaustive pattern matching enforced by compiler
+String handleError(DomainError error) => switch (error) {
+  UnexpectedError() => 'Try again',
+  SessionExpiredError() => 'Please login',
+};
 ```
 
 **Either Monad (Rivaan):**
@@ -440,10 +541,16 @@ cd andrea_bizzotto
 # Start with: 01-PROJECT-OVERVIEW.md
 ```
 
-**For Clean Architecture Mastery:**
+**For Clean Architecture Mastery (ForDev):**
 ```bash
 cd rodrigo_manguinho
 # Start with: 01-architecture-overview.md
+```
+
+**For Advanced TDD & Clean Architecture:**
+```bash
+cd rodrigo_manguinho_new_course
+# Start with: 01-ARCHITECTURE-OVERVIEW.md
 ```
 
 ---
@@ -529,13 +636,22 @@ cd rodrigo_manguinho
 - ✅ Building e-commerce, marketplace, or catalog apps
 - ✅ Value developer experience and productivity
 
-### Choose Rodrigo Manguinho's Approach If You:
+### Choose Rodrigo Manguinho's ForDev Approach If You:
 - ✅ Need strict Clean Architecture with clear boundaries
 - ✅ Want to master SOLID principles
 - ✅ Are building enterprise/team projects
 - ✅ Prefer Test-Driven Development (TDD)
 - ✅ Need framework-agnostic business logic
 - ✅ Value long-term maintainability over rapid prototyping
+
+### Choose Rodrigo Manguinho's Advanced Approach If You:
+- ✅ Want to learn pure TDD methodology (no frameworks)
+- ✅ Need to understand MVP pattern with reactive streams
+- ✅ Want manual dependency injection mastery
+- ✅ Are interested in Dart 3 sealed classes
+- ✅ Need offline-first architecture patterns
+- ✅ Want to deeply understand component interactions
+- ✅ Prefer custom test doubles over mocking frameworks
 
 ### Choose Rivaan Ranawat's Approach If You:
 - ✅ Are learning Clean Architecture for the first time
@@ -557,16 +673,17 @@ cd rodrigo_manguinho
 
 ## 📈 Project Comparison
 
-| Metric | Andrea Bizzotto | Rodrigo Manguinho | Rivaan Ranawat | Flutter Team |
-|--------|-----------------|-------------------|----------------|--------------|
-| **Complexity** | High | High | Medium | Medium |
-| **Learning Curve** | Medium | Steep | Gentle | Gentle |
-| **Features** | 7+ features | 3 features | 2 features | 4 features |
-| **Files** | 100+ | 178 | 48 | 110 |
-| **Backend** | Mock/Fake | REST API | Supabase BaaS | Dart Shelf |
-| **Best For** | Production apps | Enterprise teams | Learning | Educational |
-| **Code Generation** | Yes (Riverpod) | No | No | Yes (Freezed) |
-| **Null Safety** | Yes | Yes | Yes | Yes |
+| Metric | Andrea Bizzotto | Rodrigo (ForDev) | Rodrigo (Advanced) | Rivaan Ranawat | Flutter Team |
+|--------|-----------------|------------------|-------------------|----------------|--------------|
+| **Complexity** | High | High | Medium-High | Medium | Medium |
+| **Learning Curve** | Medium | Steep | Medium | Gentle | Gentle |
+| **Features** | 7+ features | 3 features | 1 feature (deep) | 2 features | 4 features |
+| **Files** | 100+ | 178 | ~60 | 48 | 110 |
+| **Backend** | Mock/Fake | REST API | Express Mock | Supabase BaaS | Dart Shelf |
+| **Best For** | Production apps | Enterprise teams | Learning TDD | Learning | Educational |
+| **Code Generation** | Yes (Riverpod) | No | No | No | Yes (Freezed) |
+| **Null Safety** | Yes | Yes | Yes | Yes | Yes |
+| **Dart Version** | 2.x/3.x | 2.x | 3.0+ (Sealed) | 2.x/3.x | 3.x |
 
 ---
 
@@ -593,6 +710,13 @@ flutter_arch_doc/
 │   ├── 04-component-deep-dive.md
 │   ├── 05-data-flow-guide.md
 │   └── 06-getting-started-guide.md
+│
+├── rodrigo_manguinho_new_course/          # Advanced TDD App (RxDart + MVP)
+│   ├── 01-ARCHITECTURE-OVERVIEW.md
+│   ├── 02-LAYER-BREAKDOWN.md
+│   ├── 03-DESIGN-PATTERNS.md
+│   ├── 04-COMPONENT-DEEP-DIVE.md
+│   └── 05-GETTING-STARTED-GUIDE.md
 │
 ├── rivaan_ranawat/                        # Blog App (BLoC + Supabase)
 │   ├── 01-architecture-overview.md
@@ -631,16 +755,23 @@ flutter_arch_doc/
 5. Compare all four approaches
 
 ### Path 3: Enterprise Architecture
-1. **Rodrigo Manguinho** - 01-architecture-overview.md (SOLID principles)
-2. **Rodrigo Manguinho** - 03-design-patterns.md
+1. **Rodrigo Manguinho ForDev** - 01-architecture-overview.md (SOLID principles)
+2. **Rodrigo Manguinho ForDev** - 03-design-patterns.md
 3. **Andrea Bizzotto** - 02-ARCHITECTURE-EXPLAINED.md
 4. **Andrea Bizzotto** - 08-ROUTING-TESTING-BEST-PRACTICES.md
+
+### Path 4: Test-Driven Development (TDD)
+1. **Rodrigo Manguinho Advanced** - 01-ARCHITECTURE-OVERVIEW.md (Start here!)
+2. **Rodrigo Manguinho Advanced** - 03-DESIGN-PATTERNS.md (10+ patterns)
+3. **Rodrigo Manguinho Advanced** - 04-COMPONENT-DEEP-DIVE.md (Data flow)
+4. **Rodrigo Manguinho Advanced** - 05-GETTING-STARTED-GUIDE.md (Hands-on)
+5. **Rodrigo Manguinho ForDev** - Compare TDD approaches
 
 ---
 
 ## 💡 Key Takeaways
 
-### Universal Principles (All Three Projects)
+### Universal Principles (All Five Projects)
 - **Separation of Concerns** - Clear layer boundaries
 - **Dependency Inversion** - Inner layers define contracts
 - **Testability** - Every component can be tested independently
@@ -656,12 +787,21 @@ flutter_arch_doc/
 - Code generation workflow
 - Declarative navigation
 
-**Rodrigo Manguinho:**
+**Rodrigo Manguinho (ForDev):**
 - Strict Clean Architecture
 - SOLID principles mastery
 - Test-Driven Development
 - Framework independence
 - Manual dependency injection
+
+**Rodrigo Manguinho (Advanced):**
+- Pure TDD methodology (tests first, always)
+- MVP pattern with reactive streams
+- Dart 3 sealed classes for type safety
+- Custom test doubles (no frameworks)
+- Offline-first with cache fallback
+- Complete data flow understanding
+- Component interaction patterns
 
 **Rivaan Ranawat:**
 - BLoC pattern implementation
@@ -710,6 +850,10 @@ Modern Flutter architecture with Riverpod, GoRouter, and feature-first organizat
 Clean Architecture masterclass with SOLID principles and TDD. Popular in Brazilian Flutter community for enterprise-grade patterns.
 - Repository: [github.com/rmanguinho/clean-flutter-app](https://github.com/rmanguinho/clean-flutter-app)
 
+### Rodrigo Manguinho - Advanced Flutter TDD + Clean Architecture
+Advanced educational project demonstrating professional TDD methodology with Clean Architecture, MVP pattern, and Dart 3 sealed classes. Features custom test doubles and complete offline-first implementation.
+- Repository: [github.com/rmanguinho/advanced-flutter](https://github.com/rmanguinho/advanced-flutter)
+
 ### Rivaan Ranawat - Blog App
 Clean Architecture with BLoC pattern and Supabase integration. Known for practical Flutter tutorials on YouTube with real-world backend integration.
 - Repository: [github.com/RivaanRanawat/blog-app-clean-architecture](https://github.com/RivaanRanawat/blog-app-clean-architecture)
@@ -734,8 +878,9 @@ Official Flutter sample demonstrating MVVM with Provider. Educational example fr
 
 ### For Architecture Decisions
 - Read architecture overview documents first
-- Compare the three approaches side-by-side
+- Compare the five approaches side-by-side
 - Consider your project requirements and team size
+- Start with Rodrigo's Advanced course for deep TDD understanding
 
 ---
 
